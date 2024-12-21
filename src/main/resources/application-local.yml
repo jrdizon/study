@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: study
+
+  datasource:
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://azcnc-mssql-enterpriseapp-dev.database.windows.net:1433;database=AZ-MSSQLDB-BCAR-DEV;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: bcar-dev-ddl
+    password: wBM7VCnw

@@ -3,3 +3,9 @@ spring:
     name: study
   profiles:
     active: local
+
+  thymeleaf:
+    cache: false
+    enabled: true 
+    prefix: classpath:/templates/
+    suffix: .html
