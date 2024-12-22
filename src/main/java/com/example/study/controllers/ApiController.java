@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.bind.annotation.PathVariable;
 
+import com.example.study.models.Calculation;
 import com.example.study.services.CommonServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import jakarta.validation.Valid;
@@ -46,14 +47,17 @@ public class ApiController {
 
     @RequestMapping(value = "/api/startcalc/{calctype}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	String startCalc(
-			//@Valid @Pattern (regexp = "^[a-zA-Z0-9.@_+\\-]*$") 
             @PathVariable("calctype") String calctype,
 			@RequestParam(required = true, defaultValue = "") int runid )
     {
         String json;
 		try {
-            Object[] objs = new Object[]{ runid, calctype };
-            json = objectMapper.writeValueAsString(objs); //Convert to json
+            Calculation calc = new Calculation();
+            calc.ID = runid;
+            calc.calcType = calctype;
+
+            json = commonSvc.create_JSON(calc);
+
             return json;
 		}
 		catch(Exception e)
