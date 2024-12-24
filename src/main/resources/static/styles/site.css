@@ -1,1 +1,4 @@
-.data {  }
+.data {
+    font-weight: bold;
+    color: blue;
+}

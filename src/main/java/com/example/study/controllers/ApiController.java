@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.study.models.Calculation;
 import com.example.study.services.CommonServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.LocalDateTime;
 //import jakarta.validation.Valid;
 
 @RestController
@@ -48,13 +50,16 @@ public class ApiController {
     @RequestMapping(value = "/api/startcalc/{calctype}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	String startCalc(
             @PathVariable("calctype") String calctype,
-			@RequestParam(required = true, defaultValue = "") int runid )
+			@RequestParam(required = true, defaultValue = "") int runid,
+            @RequestParam(required = true, defaultValue = "") String description )
     {
         String json;
 		try {
             Calculation calc = new Calculation();
             calc.ID = runid;
             calc.calcType = calctype;
+            calc.description = description;
+            calc.submittedOn = LocalDateTime.now();
 
             json = commonSvc.create_JSON(calc);
 

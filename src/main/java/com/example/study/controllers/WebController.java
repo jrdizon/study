@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.study.models.Calculation;
 import com.example.study.services.CommonServices;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class WebController {
 
@@ -34,12 +36,15 @@ public class WebController {
 	String startCalculation(
             Model model,
             @PathVariable("calctype") String calctype,
-			@RequestParam(required = true, defaultValue = "") int runid )
+			@RequestParam(required = true, defaultValue = "") int runid,
+            @RequestParam(required = true, defaultValue = "") String description )
     {
 		try {
             Calculation calc = new Calculation();
             calc.ID = runid;
             calc.calcType = calctype;
+            calc.description = description;
+            calc.submittedOn = LocalDateTime.now();
 
             model.addAttribute("calc",calc);
 		}
