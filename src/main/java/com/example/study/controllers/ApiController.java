@@ -4,17 +4,14 @@ package com.example.study.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 //import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
+import com.example.study.models.Calculation;
 import com.example.study.services.CommonServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.time.LocalDateTime;
 //import jakarta.validation.Valid;
 
 @RestController
@@ -52,14 +49,20 @@ public class ApiController {
 
     @RequestMapping(value = "/api/startcalc/{calctype}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	String startCalc(
-			//@Valid @Pattern (regexp = "^[a-zA-Z0-9.@_+\\-]*$") 
             @PathVariable("calctype") String calctype,
-			@RequestParam(required = true, defaultValue = "") int runid )
+			@RequestParam(required = true, defaultValue = "") int runid,
+            @RequestParam(required = true, defaultValue = "") String description )
     {
         String json;
 		try {
-            Object[] objs = new Object[]{ runid, calctype };
-            json = objectMapper.writeValueAsString(objs); //Convert to json
+            Calculation calc = new Calculation();
+            calc.ID = runid;
+            calc.calcType = calctype;
+            calc.description = description;
+            calc.submittedOn = LocalDateTime.now();
+
+            json = commonSvc.create_JSON(calc);
+
             return json;
 		}
 		catch(Exception e)
@@ -67,6 +70,15 @@ public class ApiController {
 			return Error_Json(e.getMessage()); //"Error: " + e.getMessage();
 		}
 	}
+
+    @PostMapping("/api/execute")
+    String create_JSON(
+            @RequestParam int id,
+            @RequestParam String desc)
+    {
+        Object[] obj = new Object[]{id, desc};
+        return commonSvc.create_JSON(obj);
+    }
 
     private String Error_Json(String _Msg)
 	{

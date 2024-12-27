@@ -1,0 +1,22 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>STUDY</title>
+    <link th:href="${'/styles/site.css'}" rel="stylesheet" id="MyStyles" />
+</head>
+
+<body>
+
+<div th:if="${error == null}">
+    <div>Calc ID: <span class="data" th:text="${calc.ID}"></span></div>
+    <div>Calc Type: <span class="data" th:text="${calc.calcType}"></span></div>
+    <div>Description: <span class="data" th:text="${calc.description}"></span></div>
+    <div>Submitted On: <span class="data" th:text="${calc.submittedOn}"></span></div>
+</div>
+
+<div th:unless="${error == null}">
+    <div>Error: <span th:text="${error}"></span></div>
+</div>
+
+</body>
+</html>
