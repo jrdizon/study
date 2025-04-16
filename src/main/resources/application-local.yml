@@ -4,6 +4,6 @@ spring:
 
   datasource:
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://azcnc-mssql-enterpriseapp-dev.database.windows.net:1433;database=AZ-MSSQLDB-BCAR-DEV;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-    username: bcar-dev-ddl
-    password: wBM7VCnw
+    url : jdbc:sqlserver://10.0.0.170:1433;database=home;encrypt=false;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username : sa
+    password : xBayan!1436

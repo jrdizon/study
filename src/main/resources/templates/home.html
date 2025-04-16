@@ -1,0 +1,28 @@
+<html>
+<head th:replace="~{general.html :: head}"></head>
+
+<body>
+<div th:replace="general.html :: #head"></div>
+<div style="padding:10px 20px;">
+	<button onclick="listUsers()">List Users</button>
+
+	<div id="UsersList"></div>
+</div>
+</body>
+
+<script>
+	
+function listUsers()
+{
+	var url = '/listusers';
+	$('#UsersList').load(url);		
+}
+
+window.onerror = function (message, source, lineno) {
+    source = source.replace(/[/]/g,'_');
+    var msg = message + '\nSource: ' + source + ' Line# ' + lineno;
+    alert('JavaScript Error: '+msg);
+};
+
+</script>
+</html>

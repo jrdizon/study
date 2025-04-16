@@ -1,0 +1,140 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${appName}">BCAR</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script type="text/javascript" th:src="${'/scripts/scripts.js?v='+build}"></script>
+    <script type="text/javascript" th:src="${'/scripts/scripts2.js?v='+build}"></script>
+    <link th:href="${'/styles/site.css?v='+build}" rel="stylesheet" id="MyStyles" />
+    <link th:href="${'/styles/site_BCAR.css?v='+build}" rel="stylesheet" id="BCAR_Styles" th:if="${appType == 'BCAR'}" />
+    <link th:href="${'/styles/site_RISK.css?v='+build}" rel="stylesheet" id="RISK_Styles" th:if="${appType == 'RISK'}" />
+	<link rel="shortcut icon" type="image/ico" th:href="@{/images/favicon.ico}"/>
+</head>
+
+<body>
+
+<div id="head" class="head" th:classappend="${appName.replace(' ','')}" style="margin:0px;">
+	<img src="/images/favicon.ico" style="height:30px;margin-right:8px;vertical-align:middle;">
+	<a href="/" title="Home" rel="home" class="site-logo" style="color:WHITE;text-decoration:none;vertical-align:middle;">
+	<span style="cursor:pointer;font-size:1.4em;font-weight:bold;" onclick="window.location='/'"><span id="appType" th:text="${appType}">STUDY</span> Java Sample Application</span>
+	</a>
+	<span class="appname" th:classappend="${appName.replace(' ','')}" th:text="${appName}" style="margin-left:20px;">Our App</span>	
+	<span class="dev1" onclick="setDevOff()" style="cursor:pointer;margin-left:20px;padding:4px 10px;border-radius:5px;background-color:#FF6030;color:WHITE;font-weight:bold;font-size:1.2em;" title="Click to turn off">Developer Mode</span>
+	<div style="float:right;vertical-align:middle;">
+		<span style="margin-right:20px;font-size:0.9em;vertical-align:middle;" th:text="${version}"></span>
+		<span style="margin-right:40px;vertical-align:middle;">User: <span id="head-username" th:username="${username}" th:text="${fullname}" ></span></span>
+		<span class="clickable" style="" onclick="logout()" title="Logout User" >Logout</span>
+	</div>
+	<div id="Blanket" style="display:none;background-color:#000000;opacity:0.3;position:absolute;top:0;left:0;height:calc(100vh);width:calc(100vw);"></div>
+	<div id="MainInfoPopup" class="popup">
+		<div class="pHead"></div>
+		<div class="pBody">
+		</div>
+		<div class="pFooter">	
+			<button onClick="closePopup();execPopupFunc();">Close</button>
+		</div>
+	</div>
+	
+	<div id="MainErrorPopup" class="popup error">
+		<div class="pHead"></div>
+		<div class="pBody">
+		</div>
+		<div class="pFooter">
+			<button onClick="closePopup();execPopupFunc();">Close</button>
+		</div>
+	</div>
+	
+	<div id="MainAskPopup" class="popup ask">
+		<div class="pHead"></div>
+		<div class="pBody">
+		</div>
+		<div class="pFooter">
+			<button class="btn-yes" onClick="closePopup();execPopupFunc();">Yes</button>
+			<button class="btn-no" onClick="closePopup();">No</button>
+		</div>
+	</div>
+	
+	<div id="MainAskYesNo" class="popup ask">
+		<div class="pHead"></div>
+		<div class="pBody">
+		</div>
+		<div class="pFooter">
+			<button class="btn-yes" onClick="closePopup();popupFunc(true);">Yes</button>
+			<button class="btn-no" onClick="closePopup();popupFunc(false);">No</button>
+		</div>
+	</div>
+	
+	<div id="FileViewer" class="popup">
+		<div class="pHead-icon" style="color:WHITE;background-color:#408050;background-image: url(../images/page_edit.png);">File Viewer <span class="nextTitle"></span></div>
+		<div class="pBody" style="padding:0px;">
+			<iframe id="TempFrame" class="pBody" style="display:block;height:600px;width:800px;padding:0px;"></iframe>
+		</div>
+		<div class="pFooter">
+			<button class="btn-yes" onClick="closePopup();$('#TempFrame').attr('src','');">Close</button>
+		</div>
+	</div>
+	
+	<div class="popup" id="PopupUpload">
+		<div class="pHead-icon" style="color:WHITE;background-color:#308040;background-image: url(../images/page_go.png);">Upload File <span class="nextTitle"></span></div>
+		<div class="pBody" style="">
+			<div id="br_DropZone" style="vertical-align:top;margin:0px 0px 0px 0px;">
+				<form id="DZ_Form" method="post" enctype="multipart/form-data" target="result" style="margin:0px;">
+					<div class="dropzone-container" style="vertical-align:middle;width:340px;height:200px;">
+						<input name="file" type="file" class="dropzone" style="width:340px;height:200px;" title="Drop Files Here" onchange="dzone_Change(event,this);" ondragover="dzone_DragOver(event,this);" ondragleave="dzone_DragLeave(event,this);" />
+						<div class="dz-label" style=""></div>
+					</div>
+					<div class="note-small">Note: The first tab in the worksheet will be applied to the table.</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+					<div style="margin-top:10px;">Action<br /><select name="action" class="dzAction" style="width:340px;"><option value="Append">Append to existing data</option><option value="Replace">Replace all existing data</option></select></div>
+					<div style="margin-top:10px;">Purpose<span class="red">*</span><br /><textarea name="purpose" class="dzPurpose" style="width:340px;height:50px;"></textarea></div>
+					<!-- <div style="margin-top:10px;">Approver User Email<span class="red">*</span><br /><input name="approver" class="dzApprover" style="width:300px;" /></div> -->
+				</form>
+			</div>
+		</div>
+		<div class="pFooter">
+			<button id="DzBtnUpload" class="btn-icon highlight" style="background-image: url(../images/page_go.png);" onclick="br_uploadFile()" disabled title="Upload the file">Upload</button>
+			<button class="btn-cancel" onclick="closePopup()">Cancel</button>
+		</div>
+	</div>
+	
+</div>
+
+
+
+
+<div id="ListControl" style="width:98%;white-space:normal;margin:4px 0px 2px 0px;xposition:absolute;" th:data-count="${count}" th:data-pageno="${currentPage}" th:data-totalrecords="${totalRecords}" th:data-totalpages="${totalPages}">
+
+	<!--<button onclick="loadMainFromLeft()">Back to Main</button>-->
+	<button class="btnReloadList" onclick="reloadList(this)" style="margin-left:0px;margin-right:0px;" title="Reload list">Reload</button>
+	<span class="totalRec" style="margin:0px 0px 0px 0px;">Total Records: <span th:text="${totalRecords}"></span></span>
+	<button class="btnListPagePrev small btn-icon" style="background-image: url(../images/resultset_first.png);" disabled  onclick="listGotoPage(this)"  th:data-page="${1}" title="Go to first page">First</button>
+	<button class="btnListPagePrev small btn-icon" style="background-image: url(../images/resultset_previous.png);" disabled onclick="listGotoPage(this)" th:data-page="${currentPage-1}" title="Go to previous page">Prev</button>
+	<span class="pageOf">Page <span th:text="${currentPage}"></span> of <span th:text="${totalPages}"></span></span>
+	<button class="btnListPageNext small btn-icon-right" style="background-image: url(../images/resultset_next.png);" disabled onclick="listGotoPage(this)" th:data-page="${currentPage+1}" title="Go to next page">Next</button>
+	<button class="btnListPageNext small btn-icon-right" style="background-image: url(../images/resultset_last.png);margin-right:20px;" disabled onclick="listGotoPage(this)" th:data-page="${totalPages}" title="Go to last page">Last</button>
+</div>
+
+<div id="EditControl" class="editControl">
+    <button style="background-image: url(../images/add.png);" onclick="addList()" id="btnAdd" th:if="${#strings.contains(permissions, 'A')}" title="Add new record">ADD</button>
+    <button style="background-image: url(../images/page_edit.png);" onclick="updateList()" disabled id="btnUpdate" th:if="${#strings.contains(permissions, 'U')}" title="Update selected record">UPDATE</button>
+    <button style="background-image: url(../images/page_delete.png);" onclick="deleteUser()" disabled id="btnDelete" th:if="${#strings.contains(permissions, 'D')}" title="Delete selected record">DELETE</button>
+	<button style="background-image: url(../images/page_excel.png);margin-left:10px" onclick="download(this)" th:if="${#strings.contains(permissions, 'U')}" title="Download list as Excel file">DOWNLOAD</button>
+</div>
+
+<div id="DownloadControl" style="display:inline-block;">
+    <button style="background-image: url(../images/tick.png);" onclick="toggleFilter()" th:if="${#strings.contains(permissions, 'U')}">FILTER</button>
+	<button class="btn-icon" style="background-image: url(../images/page_excel.png);" onclick="download(this)" th:if="${#strings.contains(permissions, 'U')}" title="Download list as Excel file">DOWNLOAD</button>
+	<button class="btn-icon" style="background-image: url(../images/page_go.png);" onclick="upload(this)" th:if="${#strings.contains(permissions, 'U')}" title="Download as Excel file">UPLOAD</button>
+</div>
+
+<div id="ApprovalControl" class="editControl btn btn-primary btn-sm mb-3">
+    <button style="background-image: url(../images/tick.png);" onclick="approve()" disabled id="btnApprove" th:if="${#strings.contains(permissions, 'P')}" title="Approve selected request">APPROVE</button>
+    <button style="background-image: url(../images/cross.png);" onclick="reject()" disabled id="btnReject" th:if="${#strings.contains(permissions, 'P')}" title="Reject selected request">REJECT</button>
+</div> 
+
+</body>
+
+<script>
+
+</script>
+</html>
