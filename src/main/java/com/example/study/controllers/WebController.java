@@ -9,27 +9,65 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.study.models.Calculation;
+import com.example.study.models.User;
 import com.example.study.services.CommonServices;
+import com.example.study.services.UserServices;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @Controller
 public class WebController {
+
+	@Autowired
+	UserServices userServices;
 
     @Autowired
     CommonServices commonSvc;
 
     @GetMapping("/")
-    String return_Page()
+    String homePage(Model model, HttpServletResponse response)
     {
-        return "page";
-    }
+		model.addAttribute("username", "test_userName");
+		model.addAttribute("fullname", "test_fullName");
+		
+	    model.addAttribute("active", false);
 
-    @GetMapping("/test")
-    @ResponseBody
-    String return_Test()
+		Cookie cookieUser = new Cookie("username", "test_userName");
+		cookieUser.setHttpOnly(false);
+		cookieUser.setSecure(true);
+		response.addCookie(cookieUser);
+        model.addAttribute("appName", "Study");
+        model.addAttribute("appType", "BCAR");
+        /*if (buildProperties != null && buildProperties.getTime() != null) {
+        	model.addAttribute("version", "Build "+Common.formatDateTime(buildProperties.getTime()));
+        	model.addAttribute("build", Common.formatBuild(buildProperties.getTime()));
+        	model.addAttribute("uptime", upTime.toString());
+        }
+        else {
+        	model.addAttribute("version", "No build info");
+        	model.addAttribute("build", Common.formatBuild(new Date()));
+        	model.addAttribute("uptime", "Local");
+        }*/
+    	model.addAttribute("version", "No build info");
+    	model.addAttribute("build", commonSvc.formatDateTime(new Date())); //formatBuild(new Date()
+    	model.addAttribute("uptime", "Local");
+  
+        return "home";
+    }
+    
+    @GetMapping("/listusers")
+    String listAll_Users(Model model)
     {
-        return "test";
+    	List<User> lstUsers = userServices.getList_All();
+
+    	model.addAttribute("users",lstUsers);
+
+        return "users_list";
     }
 
     @GetMapping("/start_calculation/{calctype}")
@@ -54,4 +92,11 @@ public class WebController {
 		}
         return "calculation"; //resources/templates/calculation.html
 	}
+
+    @GetMapping("/test")
+    @ResponseBody
+    String return_Test()
+    {
+        return "test";
+    }
 }

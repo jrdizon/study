@@ -1,0 +1,74 @@
+.risk1 { display:none !important; }
+
+.head.BCAR, .head.BCAR-PROD {
+	background-color:#3870C0;
+}
+.head.BCAR-PREPROD, .head.BCAR-STG {
+	background-image:linear-gradient(135deg,#3870C0,#3870C0,#E04020);
+}
+
+.head.BCAR-Local-DEV, .head.BCAR-Local-QA {
+	background-image:linear-gradient(135deg,#3870C0,#3870C0,#C0C020); #D0D020;
+}
+.head.BCAR-DEV {
+	background-image:linear-gradient(135deg,#3870C0,#3870C0,#A020E0);
+}
+.head.BCAR-QA {
+	background-image:linear-gradient(135deg,#3870C0,#3870C0,#20B020);
+}
+.head.BCAR-UAT {
+	background-image:linear-gradient(135deg,#3870C0,#3870C0,#E0A020);
+}
+
+.appname.BCAR-Local-DEV {
+	xfont-weight:bold;
+	xcolor:#A020E0; #66EEFF; #E0E040;
+	xborder:1px solid #A020E0; #66EEFF; #E0E040;
+	color:WHITE;
+	border-color:WHITE;
+	background-color:#C0C020;
+}
+.appname.BCAR-DEV {
+	font-weight:bold;
+	color:#66EEFF;
+	border:1px solid #66EEFF;
+}
+.appname.BCAR-QA, .appname.BCAR-Local-QA {
+	font-weight:bold;
+	color:#66FF66;
+	border:1px solid #66FF66;
+}
+.appname.BCAR-UAT {
+	font-weight:bold;
+	color:#FFFF00;
+	border:1px solid #FFFF00;
+}
+.appname.BCAR-PREPROD, .appname.BCAR-STG {
+	font-weight:bold;
+	color:WHITE;
+	border:1px solid WHITE;
+	background-color:#E04020;
+}
+.appname.BCAR-PROD, .appname.BCAR {
+	font-weight:bold;
+	color:WHITE;
+	border:1px solid WHITE;
+	background-color:#404040;
+}
+
+table.list-light {
+	border-top:1px solid #A0A0A0;
+}
+
+table.list-light thead {
+	height: 15px; /* this works as the min-height */
+}
+
+table.list-light thead tr { background-color: #E8EEF4 !important; padding:2px 0px; }
+
+table.list-light thead tr th {
+	height: 15px; /* this works as the min-height */
+	color: #4060A0 !important;
+	padding:2px 4px;
+	border-bottom:2px solid #C0C0C0;
+}
