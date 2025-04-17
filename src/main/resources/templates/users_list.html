@@ -15,9 +15,9 @@
      <tbody>
       <tr th:each="lst:${users}" class="selectable">    
         <td class="col-right data-id" th:data-id="${lst.Id}" th:text="${lst.Id}"></td>  
-        <td class="lname col-left" th:text="${lst.Lastname}"></td>
-		<td class="uname col-left" th:text="${lst.Username}"></td>
-        <td class="fname col-left" th:text="${lst.Firstname}"></td>
+        <td class="lname col-left" th:text="${lst.Firstname}"></td>
+		    <td class="uname col-left" th:text="${lst.Username}"></td>
+        <td class="fname col-left" th:text="${lst.Lastname}"></td>
         <td class="email col-left" th:text="${lst.Email}"></td>
         <td class="guid col-left" th:text="${lst.GUID}"></td>
         <td class="StartDate col-left" th:text="${#dates.format(lst.StartDate, 'yyyy-MM-dd')}"></td>

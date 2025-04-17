@@ -4,8 +4,7 @@
 <body>
 <div th:replace="general.html :: #head"></div>
 <div style="padding:10px 20px;">
-	<button onclick="listUsers()">List Users</button>
-
+	<button onclick="listUsers()">Refresh User List</button><span id="LoadIcon" style="margin-left:10px;"></span>
 	<div id="UsersList"></div>
 </div>
 </body>
@@ -14,8 +13,9 @@
 	
 function listUsers()
 {
+	$('#LoadIcon').html('<img src="/images/loading.gif" \> Loading...');
 	var url = '/listusers';
-	$('#UsersList').load(url);		
+	$('#UsersList').load(url, function(){ $('#LoadIcon').html('') });		
 }
 
 window.onerror = function (message, source, lineno) {
@@ -24,5 +24,8 @@ window.onerror = function (message, source, lineno) {
     alert('JavaScript Error: '+msg);
 };
 
+$(document).ready(function(){
+	listUsers();
+});
 </script>
 </html>
