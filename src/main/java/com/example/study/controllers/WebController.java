@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -68,6 +69,30 @@ public class WebController {
     	model.addAttribute("users",lstUsers);
 
         return "users_list";
+    }
+
+    @GetMapping("/getuser")
+    String getUser(Model model,
+        @RequestParam("id") int _Id
+    )
+    {
+    	model.addAttribute("user",userServices.getUser(_Id));
+
+        return "user_form";
+    }
+
+    @PostMapping("/saveuser")
+    @ResponseBody
+    String saveUser(Model model,
+        @RequestParam("id") int _Id,
+        @RequestParam(required = true, defaultValue = "") String firstname,
+        @RequestParam(required = true, defaultValue = "") String lastname,
+        @RequestParam(required = true, defaultValue = "") String enddate
+    )
+    {
+        String result = userServices.updateUser(_Id, firstname, lastname, enddate);
+
+        return result;
     }
 
     @GetMapping("/start_calculation/{calctype}")
