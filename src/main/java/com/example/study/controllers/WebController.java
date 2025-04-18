@@ -85,12 +85,16 @@ public class WebController {
     @ResponseBody
     String saveUser(Model model,
         @RequestParam("id") int _Id,
+        @RequestParam(required = true, defaultValue = "") String username,
         @RequestParam(required = true, defaultValue = "") String firstname,
         @RequestParam(required = true, defaultValue = "") String lastname,
+        @RequestParam(required = true, defaultValue = "") String email,
+        @RequestParam(required = true, defaultValue = "") String address,
+        @RequestParam(required = true, defaultValue = "") String startdate,
         @RequestParam(required = true, defaultValue = "") String enddate
     )
     {
-        String result = userServices.updateUser(_Id, firstname, lastname, enddate);
+        String result = userServices.updateUser(_Id, username, firstname, lastname, email, address, startdate, enddate);
 
         return result;
     }
