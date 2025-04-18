@@ -7,21 +7,25 @@
       <th class="col-left">Last Name</th>
       <th class="col-left">First Name</th>
       <th  class="col-left">Email Address</th>
+      <th  class="col-left">Address</th>
+      <th  class="col-left">Login Date</th>
       <th  class="col-left">Start Date</th>
       <th  class="col-left">End Date</th>
 	  <th  class="col-left">GUID</th>
     </tr>
     </thead>
      <tbody>
-      <tr th:each="lst:${users}" class="selectable">    
-        <td class="col-right data-id" th:data-id="${lst.Id}" th:text="${lst.Id}"></td>  
-        <td class="lname col-left" th:text="${lst.Firstname}"></td>
-		    <td class="uname col-left" th:text="${lst.Username}"></td>
+      <tr th:each="lst:${users}" class="selectable">
+        <td class="col-right data-id" th:data-id="${lst.Id}" th:text="${lst.Id}"></td>
+        <td class="uname col-left" th:text="${lst.Username}"></td>
         <td class="fname col-left" th:text="${lst.Lastname}"></td>
+        <td class="lname col-left" th:text="${lst.Firstname}"></td>
         <td class="email col-left" th:text="${lst.Email}"></td>
-        <td class="guid col-left" th:text="${lst.GUID}"></td>
+        <td class="address col-left" th:text="${lst.Address}"></td>
+        <td class="LoginDate col-left" th:text="${#dates.format(lst.LoginDate, 'yyyy-MM-dd')}"></td>
         <td class="StartDate col-left" th:text="${#dates.format(lst.StartDate, 'yyyy-MM-dd')}"></td>
         <td class="EndDate col-left" th:text="${#dates.format(lst.EndDate, 'yyyy-MM-dd')}"></td>
+        <td class="guid col-left" th:text="${lst.GUID}"></td>
       </tr>
      </tbody>     
 </table>

@@ -38,7 +38,11 @@ public class UserServices {
 		rec.Username = rs.getString("Username");
 		rec.Firstname = rs.getString("Firstname");
 		rec.Lastname = rs.getString("Lastname");
+		rec.Email = rs.getString("Email");
 		rec.StartDate = rs.getDate("StartDate");
+		rec.EndDate = rs.getDate("EndDate");
+		rec.Address = rs.getString("Address");
+		rec.LoginDate = rs.getDate("LoginDate");
 		rec.GUID = rs.getString("GUID");
 		return rec;
 	}
