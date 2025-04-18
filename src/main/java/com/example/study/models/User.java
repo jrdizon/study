@@ -45,6 +45,12 @@ public class User {
 	@Column(name="Email")
 	public String Email;
 
+	@Column(name="Address")
+	public String Address;
+
+	@Column(name="LoginDate")
+	public Date LoginDate;
+
 	@Column(name="GUID")
 	public String GUID;
 
