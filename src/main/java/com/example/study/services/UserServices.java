@@ -3,7 +3,9 @@ package com.example.study.services;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -28,6 +30,40 @@ public class UserServices {
 		lstUsers = jdbcTemplate.query(sql, (rs, rowNum) -> load_User(rs));
 
 		return lstUsers;
+	}
+
+	public User getUser(int _Id)
+	{
+		String sql = "select * from [Users] where id = ?";
+
+		Map<String, Object> dataSet = jdbcTemplate.queryForMap(sql, new Object[]{ _Id });
+
+		User usr = new User();
+		usr.Id = (int)dataSet.get("Id");
+		usr.Firstname = (String)dataSet.get("Firstname");
+		usr.Lastname = (String)dataSet.get("Lastname");
+		usr.EndDate = (Date)dataSet.get("EndDate");
+
+		return usr;
+	}
+
+	public String updateUser(int _Id, String _FirstName, String _LastName, String _EndDate)
+	{
+		String sql = "declare @id int;" +
+			" set @id = ?" +
+			" update [Users] set" +
+			" [Firstname] = ?," +
+			" [Lastname] = ?," +
+			" [EndDate] = ?" + //
+			" from [Users] where Id = @id";
+
+		try {
+			jdbcTemplate.update(sql, new Object[]{ _Id, _FirstName, _LastName, _EndDate });
+			return "ok";
+		}
+		catch(Exception ex) {
+			return "Error: " + ex.getMessage();
+		}
 	}
 	
 	private User load_User(ResultSet rs) throws SQLException

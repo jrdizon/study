@@ -6,6 +6,7 @@
 <div style="padding:10px 20px;">
 	<button onclick="listUsers()">Refresh User List</button><span id="LoadIcon" style="margin-left:10px;"></span>
 	<div id="UsersList"></div>
+	<div id="UserInput" style="margin-top:0px;padding:20px 20px;"></div>
 </div>
 </body>
 
@@ -16,6 +17,32 @@ function listUsers()
 	$('#LoadIcon').html('<img src="/images/loading.gif" \> Loading...');
 	var url = '/listusers';
 	$('#UsersList').load(url, function(){ $('#LoadIcon').html('') });		
+}
+
+function getUser(THS)
+{
+	var id = $(THS).attr("user_id");
+	var url = "/getuser?id=" + id;
+	$('#UserInput').load(url);
+
+}
+
+function saveUser()
+{
+	var url ='/saveuser?id=' + $('#UserId').text()
+		+ '&firstname=' + $('#FName').val()
+		+ '&lastname=' + $('#LName').val()
+		+ '&enddate=' + $('#EndDt').val();
+
+	doPost(url, function(data){
+		if (data == 'ok') {
+			listUsers();
+			$('#UserInput').html('');
+		}
+		else {
+			alert('Error: ' + data);
+		}
+	});
 }
 
 window.onerror = function (message, source, lineno) {

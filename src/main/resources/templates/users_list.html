@@ -11,7 +11,8 @@
       <th  class="col-left">Login Date</th>
       <th  class="col-left">Start Date</th>
       <th  class="col-left">End Date</th>
-	  <th  class="col-left">GUID</th>
+	    <th  class="col-left">GUID</th>
+	    <th  class="col-left"></th>
     </tr>
     </thead>
      <tbody>
@@ -26,6 +27,7 @@
         <td class="StartDate col-left" th:text="${#dates.format(lst.StartDate, 'yyyy-MM-dd')}"></td>
         <td class="EndDate col-left" th:text="${#dates.format(lst.EndDate, 'yyyy-MM-dd')}"></td>
         <td class="guid col-left" th:text="${lst.GUID}"></td>
+        <td class="col-left"><button th:user_id="${lst.Id}" onclick="getUser(this)">Edit</button></td>
       </tr>
      </tbody>     
 </table>
