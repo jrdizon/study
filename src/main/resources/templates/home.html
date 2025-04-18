@@ -30,8 +30,12 @@ function getUser(THS)
 function saveUser()
 {
 	var url ='/saveuser?id=' + $('#UserId').text()
+		+ '&username=' + encodeURIComponent($('#UName').val())
 		+ '&firstname=' + encodeURIComponent($('#FName').val())
 		+ '&lastname=' + encodeURIComponent($('#LName').val())
+		+ '&email=' + encodeURIComponent($('#Email').val())
+		+ '&address=' + encodeURIComponent($('#Address').val())
+		+ '&startdate=' + encodeURIComponent($('#StartDt').val())
 		+ '&enddate=' + $('#EndDt').val();
 
 	doPost(url, function(data){

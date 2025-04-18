@@ -40,25 +40,35 @@ public class UserServices {
 
 		User usr = new User();
 		usr.Id = (int)dataSet.get("Id");
+		usr.Username = (String)dataSet.get("Username");
 		usr.Firstname = (String)dataSet.get("Firstname");
 		usr.Lastname = (String)dataSet.get("Lastname");
+		usr.Email = (String)dataSet.get("Email");
+		usr.Address = (String)dataSet.get("Address");
+		usr.StartDate = (Date)dataSet.get("StartDate");
 		usr.EndDate = (Date)dataSet.get("EndDate");
 
 		return usr;
 	}
 
-	public String updateUser(int _Id, String _FirstName, String _LastName, String _EndDate)
+	public String updateUser(
+			int _Id, String _username, String _FirstName, String _LastName, String _email, String _address, String _StartDate, String _EndDate
+	)
 	{
 		String sql = "declare @id int;" +
 			" set @id = ?" +
 			" update [Users] set" +
+			" [Username] = ?," +
 			" [Firstname] = ?," +
 			" [Lastname] = ?," +
+			" [Email] = ?," +
+			" [Address] = ?," +
+			" [StartDate] = ?," +
 			" [EndDate] = ?" + //
 			" from [Users] where Id = @id";
 
 		try {
-			jdbcTemplate.update(sql, new Object[]{ _Id, _FirstName, _LastName, _EndDate });
+			jdbcTemplate.update(sql, new Object[]{ _Id, _username, _FirstName, _LastName, _email, _address, _StartDate, _EndDate });
 			return "ok";
 		}
 		catch(Exception ex) {

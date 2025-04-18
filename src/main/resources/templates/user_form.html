@@ -1,8 +1,12 @@
 <div>
     <table>
         <tr><td>Id</td><td id="UserId" th:text="${user.Id}"></td></tr>
+        <tr><td>Username</td><td><input id="UName" th:value="${user.Username}"</td></tr>
         <tr><td>Firstname</td><td><input id="FName" th:value="${user.Firstname}"</td></tr>
         <tr><td>Lastname</td><td><input id="LName" th:value="${user.Lastname}"</td></tr>
+        <tr><td>Email</td><td><input id="Email" th:value="${user.Email}"</td></tr>
+        <tr><td>Address</td><td><input id="Address" th:value="${user.Address}"</td></tr>
+        <tr><td>Start Date</td><td><input id="StartDt" type="date" th:value="${#dates.format(user.StartDate, 'yyyy-MM-dd')}"</td></tr>
         <tr><td>End Date</td><td><input id="EndDt" type="date" th:value="${#dates.format(user.EndDate, 'yyyy-MM-dd')}"</td></tr>
     </table>
     <button onclick="saveUser()">Save</button>
