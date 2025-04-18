@@ -30,8 +30,8 @@ function getUser(THS)
 function saveUser()
 {
 	var url ='/saveuser?id=' + $('#UserId').text()
-		+ '&firstname=' + $('#FName').val()
-		+ '&lastname=' + $('#LName').val()
+		+ '&firstname=' + encodeURIComponent($('#FName').val())
+		+ '&lastname=' + encodeURIComponent($('#LName').val())
 		+ '&enddate=' + $('#EndDt').val();
 
 	doPost(url, function(data){
@@ -40,7 +40,7 @@ function saveUser()
 			$('#UserInput').html('');
 		}
 		else {
-			alert('Error: ' + data);
+			openErrorPopup('Save User Failed','Error: ' + data);
 		}
 	});
 }
